@@ -1,6 +1,6 @@
 # dotfiles
 
-A collection of dotfiles that integrate with the **gnosis** toolset and provide an unobtrusive workflow with zsh, tmux, and vim.
+A collection of dotfiles that provide an unobtrusive workflow with zsh, tmux, and vim.
 
 > An important thing to keep in mind is that this is very much a work in progress. While developing with these tools, the structure is bound to change.
 
