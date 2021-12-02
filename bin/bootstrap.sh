@@ -8,7 +8,7 @@ brew install bat
 brew install vim
 brew install neovim --HEAD
 
-wget https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-mac -O /usr/local/bin/rust-analyzer
+# wget https://github.com/rust-analyzer/rust-analyzer/releases/download/nightly/rust-analyzer-mac -O /usr/local/bin/rust-analyzer
 
 # Install reattach-to-user-namespace
 brew install reattach-to-user-namespace
@@ -26,13 +26,13 @@ curl -fLo $HOME/.vim/autoload/plug.vim --create-dirs \
 
 # Enable .zshrc base
 touch $HOME/.zshrc
-if grep -q "GNOSIS_BOOTSTRAP" $HOME/.zshrc; then
+if grep -q "DF_BOOTSTRAP" $HOME/.zshrc; then
     echo ".zshrc already extends base profile, skipping..."
 else
     touch $HOME/tmp.zshrc
-    echo "# BEGIN GNOSIS_BOOTSTRAP" >> $HOME/tmp.zshrc
-    echo "source $HOME/dotfiles/zshrc" >> $HOME/tmp.zshrc
-    echo "# END GNOSIS_BOOTSTRAP\n" >> $HOME/tmp.zshrc
+    echo "# BEGIN DF_BOOTSTRAP" >> $HOME/tmp.zshrc
+    echo "source $HOME/dotfiles/zsh/.zshrc" >> $HOME/tmp.zshrc
+    echo "# END DF_BOOTSTRAP\n" >> $HOME/tmp.zshrc
     cat $HOME/.zshrc >> $HOME/tmp.zshrc
     cp $HOME/tmp.zshrc $HOME/.zshrc
     rm $HOME/tmp.zshrc
@@ -40,13 +40,13 @@ fi
 
 # Enable .tmux.conf base
 touch $HOME/.tmux.conf
-if grep -q "GNOSIS_BOOTSTRAP" $HOME/.tmux.conf; then
+if grep -q "DF_BOOTSTRAP" $HOME/.tmux.conf; then
     echo ".tmux.conf already extends base configuration, skipping..."
 else
     touch $HOME/tmp.tmux.conf
-    echo "# BEGIN GNOSIS_BOOTSTRAP" >> $HOME/tmp.tmux.conf
-    echo "source-file $HOME/dotfiles/tmux" >> $HOME/tmp.tmux.conf
-    echo "# END GNOSIS_BOOTSTRAP\n" >> $HOME/tmp.tmux.conf
+    echo "# BEGIN DF_BOOTSTRAP" >> $HOME/tmp.tmux.conf
+    echo "source-file $HOME/dotfiles/tmux/.tmux.conf" >> $HOME/tmp.tmux.conf
+    echo "# END DF_BOOTSTRAP\n" >> $HOME/tmp.tmux.conf
     cat $HOME/.tmux.conf >> $HOME/tmp.tmux.conf
     cp $HOME/tmp.tmux.conf $HOME/.tmux.conf
     rm $HOME/tmp.tmux.conf
@@ -54,13 +54,13 @@ fi
 
 # Enable .vimrc base
 touch $HOME/.vimrc
-if grep -q "GNOSIS_BOOTSTRAP" $HOME/.vimrc; then
+if grep -q "DF_BOOTSTRAP" $HOME/.vimrc; then
     echo ".vimrc already extends base configuration, skipping..."
 else
     touch $HOME/tmp.vimrc
-    echo "\" BEGIN GNOSIS_BOOTSTRAP" >> $HOME/tmp.vimrc
-    echo "source $HOME/dotfiles/vimrc" >> $HOME/tmp.vimrc
-    echo "\" END GNOSIS_BOOTSTRAP\n" >> $HOME/tmp.vimrc
+    echo "\" BEGIN DF_BOOTSTRAP" >> $HOME/tmp.vimrc
+    echo "source $HOME/dotfiles/nvim/init.vim" >> $HOME/tmp.vimrc
+    echo "\" END DF_BOOTSTRAP\n" >> $HOME/tmp.vimrc
     cat $HOME/.vimrc >> $HOME/tmp.vimrc
     cp $HOME/tmp.vimrc $HOME/.vimrc
     rm $HOME/tmp.vimrc
