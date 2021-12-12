@@ -27,8 +27,8 @@ export TERM=xterm-256color-italic
 fpath+=$HOME/.dfbin/pure
 autoload -U promptinit; promptinit
 prompt pure
-export PURE_PROMPT_SYMBOL='λ ▸'
-export PURE_PROMPT_VICMD_SYMBOL='µ ▸'
+export PURE_PROMPT_SYMBOL="[$(uname -m)] λ"
+# export PURE_PROMPT_VICMD_SYMBOL='µ ▸'
 
 # Aliases
 alias cat='bat'
@@ -68,6 +68,9 @@ export PATH=$PATH:~/pyenvs/neovim/env/bin
 # Rust
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Local Executables
+export PATH="$PATH:$HOME/.local/bin"
+
 # Fuzzy Finding
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -77,10 +80,36 @@ alias vim='nvim'
 alias nv='nvim'
 
 # Allow vi keybindings in zsh
-bindkey -v
+# bindkey -v
+bindkey -e
 
-# Always open in Tmux
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-    tmux attach -t default || tmux new -s default
+# ZSH/TMUX arch flexibility
+switcharch() {
+  if [[ "$1" == "$(uname -m)" ]]; then
+    return 0
+  fi
+
+  if [[ "$1" != "arm64" ]] && [[ "$1" != "x86_64" ]]; then
+    echo "Unsupported architecture: $1"
+    return 1
+  fi
+
+  if [ -n "$OUTER_SHELL_ARCH" ] && [[ "$OUTER_SHELL_ARCH" == "$1" ]]; then
+    exit
+    return 0
+  fi
+
+  OUTER_SHELL_ARCH="$(uname -m)" arch -$1 /bin/zsh
+}
+
+alias zsh-arm64="switcharch arm64"
+alias zsh-i386="switcharch x86_64"
+
+if [ -z "$OUTER_SHELL_ARCH" ] && [ -z "$TMUX" ] && [ -n "$TMUX_TARGET_ARCH" ]; then
+  switcharch "$TMUX_TARGET_ARCH"
+else
+  # Always open in Tmux
+  if command -v tmux &> /dev/null && [ -z "$TMUX" ] && [[ "$TERM_PROGRAM" != "vscode" ]]; then
+    OUTER_SHELL_ARCH="" tmux attach -t default || OUTER_SHELL_ARCH="" tmux new -s default
+  fi
 fi
-
